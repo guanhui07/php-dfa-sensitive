@@ -1,12 +1,16 @@
 {
-    "name": "lustre/php-dfa-sensitive",
-    "description": "To achieve the filtering of sensitive words, based on the determination of finite automata (DFA) algorithm.",
+    "name": "jiangwu10057/DFA-Sensitive",
+    "description": "copy from FireLustre/php-dfa-sensitive,To achieve the filtering of sensitive words, based on the determination of finite automata (DFA) algorithm.",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
             "name": "Lustre",
             "email": "firelustre@163.com"
+        },
+        {
+            "name": "jiangwu",
+            "email": "jiangwu10057@qq.com"
         }
     ],
     "repositories": {
