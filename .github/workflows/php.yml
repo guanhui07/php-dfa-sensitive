@@ -18,5 +18,3 @@ jobs:
 
     - name: Run test suite
       run: composer test
-    
-    - 
