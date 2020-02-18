@@ -181,7 +181,11 @@ class SensitiveHelper
                 continue;
             }
 
-            $badWordList[] = mb_substr($content, $length, $matchFlag + count($stopWords), 'utf-8');
+            $badWord = mb_substr($content, $length, $matchFlag + count($stopWords), 'utf-8');
+
+            if(!in_array($badWord, $badWordList)){
+                $badWordList[] = $badWord;
+            }
 
             // 有返回数量限制
             if ($wordNum > 0 && count($badWordList) == $wordNum) {
