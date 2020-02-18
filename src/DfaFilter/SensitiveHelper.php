@@ -59,7 +59,7 @@ class SensitiveHelper
     }
 
     /**
-     * 
+     * 设置干扰因子
      * @return $this
      * @throws \DfaFilter\Exceptions\PdsBusinessException
      */

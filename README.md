@@ -47,10 +47,15 @@ php实现基于确定有穷自动机算法的铭感词过滤 https://packagist.o
     
     // get one helper
     $handle = SensitiveHelper::init()->setTreeByFile($wordFilePath);
-   
+
+### 设置干扰因子集合
+
+    $handle = SensitiveHelper::init()->setStopWordList(['&', '*', '.'])->setTreeByFile($wordFilePath);
+
 ### 检测是否含有敏感词
 
     $islegal = $handle->islegal($content);
+
 ### 敏感词过滤
     
     // 敏感词替换为*为例（会替换为相同字符长度的*）
@@ -69,25 +74,13 @@ php实现基于确定有穷自动机算法的铭感词过滤 https://packagist.o
     // 仅且获取一个敏感词
     $sensitiveWordGroup = $handle->getBadWord($content, 1);
 
-### 如何使用单元测试进行测试
-#### 安装PHPUnit
-```bash
-$ wget https://phar.phpunit.de/phpunit.phar
-
-$ chmod +x phpunit.phar
-
-$ mv phpunit.phar /usr/local/bin/phpunit
-```
 #### 使用composer自动加载php命名空间
-
 ```bash
 $ composer update
 ```
 ### 运行单元测试
 ```bash
-$ phpunit tests/BaseTest.php
+$ composer test
 ```
 
-*如果大家有更好的建议，请大家多多指正，O(∩_∩)O谢谢*
-
-*你们的star是我的动力*
+注：本仓库fork自：https://github.com/FireLustre/php-dfa-sensitive， 现仅做个人学习使用！
