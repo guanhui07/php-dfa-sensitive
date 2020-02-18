@@ -9,7 +9,7 @@
 use DfaFilter\SensitiveHelper;
 use PHPUnit\Framework\TestCase;
 
-class BaseTest extends TestCase
+class ProTest extends TestCase
 {
     protected $wordPoolPath;
 

@@ -25,15 +25,21 @@ class SensitiveHelper
      */
     private static $_instance = null;
 
+
     /**
-     * 铭感词库树
+     * 敏感词库树
      *
      * @var HashMap|null
      */
     protected $wordTree = null;
 
     /**
-     * 存放待检测语句铭感词
+     * 停止词、干扰因子集合
+     */
+    private $stopWordList = [];
+
+    /**
+     * 存放待检测语句敏感词
      *
      * @var array|null
      */
@@ -52,6 +58,19 @@ class SensitiveHelper
         return self::$_instance;
     }
 
+    /**
+     * 
+     * @return $this
+     * @throws \DfaFilter\Exceptions\PdsBusinessException
+     */
+    public function setStopWordList($stopWordList = array())
+    {
+        if (!is_array($stopWordList) || count($stopWordList) == 0) {
+            throw new PdsBusinessException('停止词词库不存在', PdsBusinessException::EMPTY_STOP_WORD);
+        }
+        $this->stopWordList = $stopWordList;
+        return $this;
+    }
 
     /**
      * 构建铭感词树【文件模式】
@@ -117,8 +136,14 @@ class SensitiveHelper
             $matchFlag = 0;
             $flag = false;
             $tempMap = $this->wordTree;
+            $stopWords = [];
             for ($i = $length; $i < $this->contentLength; $i++) {
                 $keyChar = mb_substr($content, $i, 1, 'utf-8');
+
+                if ($this->checkStopWord($keyChar)) {
+                    $stopWords[] = $keyChar;
+                    continue;
+                }
 
                 // 获取指定节点树
                 $nowMap = $tempMap->get($keyChar);
@@ -156,7 +181,7 @@ class SensitiveHelper
                 continue;
             }
 
-            $badWordList[] = mb_substr($content, $length, $matchFlag, 'utf-8');
+            $badWordList[] = mb_substr($content, $length, $matchFlag + count($stopWords), 'utf-8');
 
             // 有返回数量限制
             if ($wordNum > 0 && count($badWordList) == $wordNum) {
@@ -223,7 +248,6 @@ class SensitiveHelper
         }
 
         $badWordList = self::$badWordList ? self::$badWordList : $this->getBadWord($content, $matchType);
-
         // 未检测到敏感词，直接返回
         if (empty($badWordList)) {
             return $content;
@@ -348,5 +372,15 @@ class SensitiveHelper
         }
 
         return $str;
+    }
+
+    /**
+     * 停止词检测
+     * @param $word
+     * @return bool
+     */
+    private function checkStopWord($word)
+    {
+        return in_array($word, $this->stopWordList);
     }
 }
