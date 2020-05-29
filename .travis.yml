@@ -1,0 +1,18 @@
+language: php
+
+php:
+    - '7.0'
+    - '7.1'
+    - '7.2'
+    - '7.2'
+
+sudo: required
+
+before_script:
+    - cd $TRAVIS_BUILD_DIR
+    - composer config -g process-timeout 900 && composer update
+
+script:
+    - composer cs-fix
+    - composer analyse
+    - composer test

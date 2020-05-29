@@ -1,0 +1,15 @@
+parameters:
+  level: 5
+  paths:
+    - src
+    - tests
+  fileExtensions:
+    - php
+    - inc
+  parallel:
+    jobSize: 2
+    maximumNumberOfProcesses: 8
+  ignoreErrors:
+    - "#will always evaluate to false#"
+  excludes_analyse:
+    - %currentWorkingDirectory%/tests/data/*
