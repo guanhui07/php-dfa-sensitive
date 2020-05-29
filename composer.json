@@ -39,10 +39,8 @@
         "phpstan/phpstan": "^0.11"
     },
     "scripts": {
-        "cs-fix": [
-            "./vendor/bin/phpcs src",
-            "./vendor/bin/phpcbf src"
-        ],
+        "cs": "./vendor/bin/phpcs src",
+        "cs-fix": "./vendor/bin/phpcbf src",
         "analyse": "./vendor/bin/phpstan analyse --memory-limit 300M -c phpstan.neon",
         "test": "./vendor/bin/phpunit --no-coverage"
     }
