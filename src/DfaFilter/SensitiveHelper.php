@@ -61,9 +61,9 @@ class SensitiveHelper
 
     /**
      * 设置干扰因子
-     * 
+     *
      * @param array $stopWordList
-     * 
+     *
      * @return $this
      * @throws \DfaFilter\Exceptions\PdsBusinessException
      */
@@ -133,7 +133,7 @@ class SensitiveHelper
      */
     public function getBadWord($content, $matchType = 1, $wordNum = 0)
     {
-        $this->contentLength = $this->mb_strlen($content, 'utf-8');
+        $this->contentLength = $this->mbStrlen($content, 'utf-8');
         $badWordList = array();
         for ($length = 0; $length < $this->contentLength; $length++) {
             $matchFlag = 0;
@@ -279,7 +279,7 @@ class SensitiveHelper
      */
     public function islegal($content)
     {
-        $this->contentLength = $this->mb_strlen($content, 'utf-8');
+        $this->contentLength = $this->mbStrlen($content, 'utf-8');
 
         for ($length = 0; $length < $this->contentLength; $length++) {
             $matchFlag = 0;
@@ -343,7 +343,7 @@ class SensitiveHelper
         }
         $tree = $this->wordTree;
 
-        $wordLength = $this->mb_strlen($word, 'utf-8');
+        $wordLength = $this->mbStrlen($word, 'utf-8');
         for ($i = 0; $i < $wordLength; $i++) {
             $keyChar = mb_substr($word, $i, 1, 'utf-8');
 
@@ -382,7 +382,7 @@ class SensitiveHelper
     protected function dfaBadWordConversChars($word, $char)
     {
         $str = '';
-        $length = $this->mb_strlen($word, 'utf-8');
+        $length = $this->mbStrlen($word, 'utf-8');
         for ($counter = 0; $counter < $length; ++$counter) {
             $str .= $char;
         }
@@ -407,7 +407,7 @@ class SensitiveHelper
      * @return int
      * @throws \DfaFilter\Exceptions\PdsSystemException
      */
-    private function mb_strlen($str, $encoding = 'utf-8')
+    private function mbStrlen($str, $encoding = 'utf-8')
     {
         $length = mb_strlen($str, $encoding);
         if ($length === false) {
