@@ -13,12 +13,12 @@
             "email": "jiangwu10057@qq.com"
         }
     ],
-    "repositories": {
-        "packagist": {
-            "type": "composer",
-            "url": "https://mirrors.aliyun.com/composer/"
-        }
-    },
+    // "repositories": {
+    //     "packagist": {
+    //         "type": "composer",
+    //         "url": "https://mirrors.aliyun.com/composer/"
+    //     }
+    // },
     "config": {
         "optimize-autoloader": true,
         "sort-packages": true
