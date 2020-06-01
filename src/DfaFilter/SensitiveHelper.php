@@ -36,10 +36,7 @@ class SensitiveHelper
 
     /**
      * 停止词、干扰因子集合
-<<<<<<< HEAD
-=======
      * @var array
->>>>>>> feature-uniquebadwords
      */
     private $stopWordList = [];
 
@@ -65,12 +62,6 @@ class SensitiveHelper
 
     /**
      * 设置干扰因子
-<<<<<<< HEAD
-     * @return $this
-     * @throws \DfaFilter\Exceptions\PdsBusinessException
-     */
-    public function setStopWordList($stopWordList = array())
-=======
      *
      * @param array $stopWordList
      *
@@ -78,7 +69,6 @@ class SensitiveHelper
      * @throws \DfaFilter\Exceptions\PdsBusinessException
      */
     public function setStopWordList($stopWordList = [])
->>>>>>> feature-uniquebadwords
     {
         if (!is_array($stopWordList) || count($stopWordList) == 0) {
             throw new PdsBusinessException('停止词词库不存在', PdsBusinessException::EMPTY_STOP_WORD);

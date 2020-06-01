@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://travis-ci.com/jiangwu10057/php-dfa-sensitive"><img src="https://api.travis-ci.com/jiangwu10057/php-dfa-sensitive.svg?branch=feature-uniquebadwords" alt="Build Status"></a>
+  <a href="https://travis-ci.com/jiangwu10057/php-dfa-sensitive"><img src="https://api.travis-ci.com/jiangwu10057/php-dfa-sensitive.svg?branch=master" alt="Build Status"></a>
   <a href="https://secure.php.net/"><img src="https://img.shields.io/badge/php-%3E=7.2-brightgreen.svg?maxAge=2592000" alt="Php Version"></a>
 </p>
 
