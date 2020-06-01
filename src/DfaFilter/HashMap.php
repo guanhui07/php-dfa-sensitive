@@ -17,30 +17,31 @@ class HashMap
      */
     protected $hashTable = array();
 
-    public function __construct(){}
+    public function __construct()
+    {
+    }
 
     /**
      * 向HashMap中添加一个键值对
      *
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param mixed|null $value
      * @return mixed|null
      */
     public function put($key, $value)
     {
-        if (! array_key_exists($key, $this->hashTable)) {
-            $this->hashTable[$key] = $value;
-            return null;
+        $temp = null;
+        if (array_key_exists($key, $this->hashTable)) {
+            $temp = $this->hashTable[$key];
         }
-        $_temp = $this->hashTable[$key];
         $this->hashTable[$key] = $value;
-        return $_temp;
+        return $temp;
     }
 
     /**
      * 根据key获取对应的value
      *
-     * @param $key
+     * @param string $key
      * @return mixed|null
      */
     public function get($key)
@@ -48,13 +49,14 @@ class HashMap
         if (array_key_exists($key, $this->hashTable)) {
             return $this->hashTable[$key];
         }
+
         return null;
     }
 
     /**
      * 删除指定key的键值对
      *
-     * @param $key
+     * @param string $key
      * @return mixed|null
      */
     public function remove($key)
@@ -72,6 +74,7 @@ class HashMap
             $this->hashTable = $temp_table;
             return $tempValue;
         }
+
         return null;
     }
 
@@ -108,8 +111,6 @@ class HashMap
                 $this->put($key, $map->get($key));
             }
         }
-
-        return ;
     }
 
     /**
@@ -126,7 +127,7 @@ class HashMap
     /**
      * 判断HashMap中是否包含指定的值
      *
-     * @param $value
+     * @param mixed $value
      * @return bool
      */
     public function containsValue($value)
@@ -137,22 +138,23 @@ class HashMap
             }
             next($this->hashTable);
         }
+
         return false;
     }
 
     /**
      * 判断HashMap中是否包含指定的键key
      *
-     * @param $key
+     * @param string $key
      * @return bool
      */
     public function containsKey($key)
     {
         if (array_key_exists($key, $this->hashTable)) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**

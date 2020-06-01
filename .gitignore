@@ -1,6 +1,17 @@
+# ide
+.buildpath
+.settings
+.project
+*.patch
+.idea
+
+# mac
 .DS_Store
-.idea/
 
-/vendor/
-
-/composer.lock
+.git/
+runtime
+vendor
+.phpintel
+.env
+*.lock
+.phpunit*
