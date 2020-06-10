@@ -33,8 +33,8 @@
         "phpstan/phpstan": "^0.11"
     },
     "scripts": {
-        "cs": "./vendor/bin/phpcs src",
-        "cs-fix": "./vendor/bin/phpcbf src",
+        "cs": "./vendor/bin/phpcs -p --extensions=php --standard=PSR2 --error-severity=1 --warning-severity=0 src",
+        "cs-fix": "./vendor/bin/phpcbf -p --extensions=php --standard=PSR2 --error-severity=1 --warning-severity=0 src",
         "analyse": "./vendor/bin/phpstan analyse --memory-limit 300M -c phpstan.neon",
         "analyse-baseline": "./vendor/bin/phpstan analyse --level 5 --configuration phpstan.neon src tests --generate-baseline",
         "test": "./vendor/bin/phpunit --no-coverage"
