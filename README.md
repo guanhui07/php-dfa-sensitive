@@ -5,7 +5,7 @@
 
 # php-DFA-filterWord
 
-php实现基于确定有穷自动机算法的铭感词过滤 https://packagist.org/packages/jiangwu10057/php-dfa-sensitive
+php实现基于确定有穷自动机算法的铭感词过滤 https://packagist.org/packages/jiangwu10057/dfa-sensitive
 
 ##  安装&使用流程
 
