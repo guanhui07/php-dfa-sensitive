@@ -5,7 +5,7 @@
 
 # php-DFA-filterWord
 
-php实现基于确定有穷自动机算法的铭感词过滤 https://packagist.org/packages/lustre/php-dfa-sensitive
+php实现基于确定有穷自动机算法的铭感词过滤 https://packagist.org/packages/jiangwu10057/php-dfa-sensitive
 
 ##  安装&使用流程
 
@@ -56,13 +56,16 @@ php实现基于确定有穷自动机算法的铭感词过滤 https://packagist.o
 
 ### 设置干扰因子集合
 > 注意只干扰因子只支持单个字符或单个汉字，暂不支持词
+
 > 但是多个干扰因子连在一起，敏感词可以准确识别
 
     $handle = SensitiveHelper::init()->setStopWordList(['&', '*', '.'])->setTreeByFile($wordFilePath);
 
 ### 忽略大小写
-    > 注意该设置只有在构建敏感词库树之前调用
-    > 在构建敏感词库树之后调用，结果可能不符合预期
+> 注意该设置只有在构建敏感词库树之前调用
+
+> 在构建敏感词库树之后调用，结果可能不符合预期
+
     $handle = SensitiveHelper::init()->setIgnoreCase()->setTree(['Av', '赌球网'])
 
 ### 检测是否含有敏感词
@@ -104,4 +107,5 @@ $ composer test
 - 新增两个特性
     - getBadWord返回的敏感词列表是排查的，避免替换敏感词的出现重复替换的问题（提过PR，没有通过所以留个记录！）
     - 新增停止词功能，提高敏感词命中率
+    - 新增忽略大小写功能
 - ci的集成
