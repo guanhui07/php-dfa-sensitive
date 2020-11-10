@@ -21,6 +21,18 @@ class BaseTest extends TestCase
         $this->wordData = explode(',', $wordPool);
     }
 
+    public function testIgnoreCase()
+    {
+        $content = '这是一段aV测试语句，请忽略赌球网';
+
+        $filterContent = SensitiveHelper::init()
+            ->setIgnoreCase()
+            ->setTree(['Av', '赌球网'])
+            ->replace($content,'*');
+
+        $this->assertEquals('这是一段*测试语句，请忽略*',$filterContent);
+    }
+
     public function testGetBadWord()
     {
         $content = '这是一段测试语句，请忽略赌球网, 第二个敏感词是三级片';
@@ -49,5 +61,12 @@ class BaseTest extends TestCase
             ->replace($content,'*');
 
         $this->assertEquals('这是一段测试语句，请忽略*',$filterContent);
+    }
+
+    public function testIslegal()
+    {
+        $this->assertTrue(SensitiveHelper::init()->setTree(['赌球网'])->islegal('这是一段测试语句，请忽略赌球网'));
+        $this->assertFalse(SensitiveHelper::init()->setTree(['赌球网'])->islegal('这是一段测试语句，请忽略赌球&网'));
+        $this->assertTrue(SensitiveHelper::init()->setStopWordList(['&','#', '$'])->setTree(['赌球网'])->islegal('这是一段测试语句，请忽略赌球#$网'));
     }
 }

@@ -35,7 +35,7 @@ class SensitiveHelper
     protected $wordTree = null;
 
     /**
-     * 停止词、干扰因子集合
+     * 干扰因子集合
      * @var array
      */
     private $stopWordList = [];
@@ -48,9 +48,15 @@ class SensitiveHelper
     protected static $badWordList = null;
 
     /**
+     * 默认大小写敏感
+     * @var bool
+     */
+    protected $ignoreCase = false;
+
+    /**
      * 获取单例
      *
-     * @return Object
+     * @return SensitiveHelper
      */
     public static function init()
     {
@@ -71,9 +77,20 @@ class SensitiveHelper
     public function setStopWordList($stopWordList = [])
     {
         if (!is_array($stopWordList) || count($stopWordList) == 0) {
-            throw new PdsBusinessException('停止词词库不存在', PdsBusinessException::EMPTY_STOP_WORD);
+            throw new PdsBusinessException('干扰因子词库不存在', PdsBusinessException::EMPTY_STOP_WORD);
         }
-        $this->stopWordList = $stopWordList;
+        $this->stopWordList = array_flip($stopWordList);
+        return $this;
+    }
+
+    /**
+     * 设置是否忽略 大小写
+     * @param bool $bool
+     * @return SensitiveHelper
+     */
+    public function setIgnoreCase()
+    {
+        $this->ignoreCase = true;
         return $this;
     }
 
@@ -95,7 +112,7 @@ class SensitiveHelper
         $this->wordTree = $this->wordTree ?: new HashMap();
 
         foreach ($this->yieldToReadFile($filepath) as $word) {
-            $this->buildWordToTree(trim($word));
+            $this->buildWordToTree($word);
         }
 
         return $this;
@@ -149,6 +166,8 @@ class SensitiveHelper
                     continue;
                 }
 
+                $keyChar = $this->transformate($keyChar);
+
                 // 获取指定节点树
                 $nowMap = $tempMap->get($keyChar);
 
@@ -197,7 +216,7 @@ class SensitiveHelper
             }
 
             // 需匹配内容标志位往后移
-            $length = $length + $matchFlag - 1;
+            $length = $length + $matchFlag + count($stopWords) - 1;
         }
 
         return $badWordList;
@@ -284,10 +303,18 @@ class SensitiveHelper
 
         for ($length = 0; $length < $this->contentLength; $length++) {
             $matchFlag = 0;
-
             $tempMap = $this->wordTree;
+            $stopWords = [];
+
             for ($i = $length; $i < $this->contentLength; $i++) {
                 $keyChar = mb_substr($content, $i, 1, 'utf-8');
+
+                if ($this->checkStopWord($keyChar)) {
+                    $stopWords[] = $keyChar;
+                    continue;
+                }
+
+                $keyChar = $this->transformate($keyChar);
 
                 // 获取指定节点树
                 $nowMap = $tempMap->get($keyChar);
@@ -315,7 +342,7 @@ class SensitiveHelper
             }
 
             // 需匹配内容标志位往后移
-            $length = $length + $matchFlag - 1;
+            $length = $length + $matchFlag + count($stopWords) - 1;
         }
 
         return false;
@@ -333,6 +360,11 @@ class SensitiveHelper
         fclose($fp);
     }
 
+    private function transformate($word)
+    {
+        return $this->ignoreCase ? strtolower($word) : $word;
+    }
+
     /**
      * 将单个敏感词构建成树结构
      * @param string $word
@@ -342,6 +374,8 @@ class SensitiveHelper
         if ('' === $word) {
             return true;
         }
+
+        $word = trim($this->transformate($word));
         $tree = $this->wordTree;
 
         $wordLength = $this->mbStrlen($word, 'utf-8');
@@ -392,13 +426,16 @@ class SensitiveHelper
     }
 
     /**
-     * 停止词检测
+     * 干扰因子检测
      * @param string $word
      * @return bool
      */
     private function checkStopWord($word)
     {
-        return in_array($word, $this->stopWordList);
+        if (empty($this->stopWordList)) {
+            return false;
+        }
+        return array_key_exists($word, $this->stopWordList);
     }
 
     /**

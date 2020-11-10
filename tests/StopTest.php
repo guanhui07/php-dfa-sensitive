@@ -19,6 +19,16 @@ class StopTest extends TestCase
         $this->wordPoolPath = 'tests/data/words.txt';
     }
 
+    /**
+     * @expectedException DfaFilter\Exceptions\PdsBusinessException
+     * @expectedExceptionMessage 干扰因子词库不存在
+     */
+    public function testStopWordList()
+    {
+        SensitiveHelper::init()
+            ->setStopWordList();
+    }
+
     public function testGetBadWord()
     {
         $sTime = microtime(true);

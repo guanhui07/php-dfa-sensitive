@@ -18,10 +18,10 @@ php实现基于确定有穷自动机算法的铭感词过滤 https://packagist.o
 
 ### 安装扩展 
 
-    composer require lustre/php-dfa-sensitive
+    composer require jiangwu10057/dfa-sensitive
    
 * 注意:如果你在使用composer安装时，出现                    
-  Could not find package lustre/php-dfa-sensitive at any version for your minimum-stability (stable). Check the package spelling or your minimum-stability 请在你的composer.json中加入<code>"minimum-stability": "dev"</code>
+  Could not find package jiangwu10057/php-dfa-sensitive at any version for your minimum-stability (stable). Check the package spelling or your minimum-stability 请在你的composer.json中加入<code>"minimum-stability": "dev"</code>
    
 #### 如果你需要手动引入
 
@@ -55,8 +55,15 @@ php实现基于确定有穷自动机算法的铭感词过滤 https://packagist.o
     $handle = SensitiveHelper::init()->setTreeByFile($wordFilePath);
 
 ### 设置干扰因子集合
+> 注意只干扰因子只支持单个字符或单个汉字，暂不支持词
+> 但是多个干扰因子连在一起，敏感词可以准确识别
 
     $handle = SensitiveHelper::init()->setStopWordList(['&', '*', '.'])->setTreeByFile($wordFilePath);
+
+### 忽略大小写
+    > 注意该设置只有在构建敏感词库树之前调用
+    > 在构建敏感词库树之后调用，结果可能不符合预期
+    $handle = SensitiveHelper::init()->setIgnoreCase()->setTree(['Av', '赌球网'])
 
 ### 检测是否含有敏感词
 
