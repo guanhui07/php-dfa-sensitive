@@ -6,9 +6,8 @@
 ### 安装扩展 
 ```
     composer require guanhui07/dfa-sensitive
- ```
-* 注意:如果你在使用composer安装时，出现                    
-  Could not find package jiangwu10057/php-dfa-sensitive at any version for your minimum-stability (stable). Check the package spelling or your minimum-stability 请在你的composer.json中加入<code>"minimum-stability": "dev"</code>
+```
+
    
 #### 如果你需要手动引入
 ```php
