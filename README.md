@@ -5,20 +5,10 @@
 
 # php-DFA-filterWord
 
-php实现基于确定有穷自动机算法的铭感词过滤 https://packagist.org/packages/jiangwu10057/dfa-sensitive
-
-##  安装&使用流程
-
-### Download and install Composer:
-
-    curl -sS https://getcomposer.org/installer | php
-> 要检查 Composer 是否正常工作，只需要通过 php 来执行 PHAR
-   
-    php composer.phar
 
 ### 安装扩展 
 
-    composer require jiangwu10057/dfa-sensitive
+    composer require guanhui07/dfa-sensitive
    
 * 注意:如果你在使用composer安装时，出现                    
   Could not find package jiangwu10057/php-dfa-sensitive at any version for your minimum-stability (stable). Check the package spelling or your minimum-stability 请在你的composer.json中加入<code>"minimum-stability": "dev"</code>
