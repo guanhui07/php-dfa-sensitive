@@ -19,63 +19,63 @@
 
 场景一: 可以拿到不同（用户）词库数组
 ```php
-    // 获取感词库索引数组
-    $wordData = array(
-        '察象蚂',
-        '拆迁灭',
-        '车牌隐',
-        '成人电',
-        '成人卡通',
-        ......
-    );
-    
-    // get one helper
-    $handle = SensitiveHelper::init()->setTree($wordData);
+// 获取感词库索引数组
+$wordData = array(
+    '察象蚂',
+    '拆迁灭',
+    '车牌隐',
+    '成人电',
+    '成人卡通',
+    ......
+);
+
+// get one helper
+$handle = SensitiveHelper::init()->setTree($wordData);
 ```
 场景二: 全站使用一套敏感词库
 ```php
-    // 获取感词库文件路径
-    $wordFilePath = 'tests/data/words.txt';
-    
-    // get one helper
-    $handle = SensitiveHelper::init()->setTreeByFile($wordFilePath);
+// 获取感词库文件路径
+$wordFilePath = 'tests/data/words.txt';
+
+// get one helper
+$handle = SensitiveHelper::init()->setTreeByFile($wordFilePath);
 ```
 ### 设置干扰因子集合
 > 注意只干扰因子只支持单个字符或单个汉字，暂不支持词
 
 > 但是多个干扰因子连在一起，敏感词可以准确识别
 ```php
-    $handle = SensitiveHelper::init()->setStopWordList(['&', '*', '.'])->setTreeByFile($wordFilePath);
+$handle = SensitiveHelper::init()->setStopWordList(['&', '*', '.'])->setTreeByFile($wordFilePath);
 ```
 ### 忽略大小写
 > 注意该设置只有在构建敏感词库树之前调用
 
 > 在构建敏感词库树之后调用，结果可能不符合预期
 ```php
-    $handle = SensitiveHelper::init()->setIgnoreCase()->setTree(['Av', '赌球网'])
+$handle = SensitiveHelper::init()->setIgnoreCase()->setTree(['Av', '赌球网'])
 ```
 ### 检测是否含有敏感词
 ```php
-    $islegal = $handle->islegal($content);
+$islegal = $handle->islegal($content);
 ```
 ### 敏感词过滤
 ```php
 // 敏感词替换为*为例（会替换为相同字符长度的*）
 $filterContent = $handle->replace($content, '*', true);
 
- // 或敏感词替换为***为例
- $filterContent = $handle->replace($content, '***');
+// 或敏感词替换为***为例
+$filterContent = $handle->replace($content, '***');
 ``` 
  ### 标记敏感词
 ```php
-     $markedContent = $handle->mark($content, '<mark>', '</mark>');
+$markedContent = $handle->mark($content, '<mark>', '</mark>');
 ```
 ### 获取文字中的敏感词
 ```php
-    // 获取内容中所有的敏感词
-    $sensitiveWordGroup = $handle->getBadWord($content);
-    // 仅且获取一个敏感词
-    $sensitiveWordGroup = $handle->getBadWord($content, 1);
+// 获取内容中所有的敏感词
+$sensitiveWordGroup = $handle->getBadWord($content);
+// 仅且获取一个敏感词
+$sensitiveWordGroup = $handle->getBadWord($content, 1);
 ```
 
 
