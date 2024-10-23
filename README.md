@@ -7,9 +7,9 @@
 
 
 ### 安装扩展 
-
+```
     composer require guanhui07/dfa-sensitive
-   
+   ```
 * 注意:如果你在使用composer安装时，出现                    
   Could not find package jiangwu10057/php-dfa-sensitive at any version for your minimum-stability (stable). Check the package spelling or your minimum-stability 请在你的composer.json中加入<code>"minimum-stability": "dev"</code>
    
@@ -22,7 +22,7 @@
 ### 构建敏感词库树
 
 场景一: 可以拿到不同（用户）词库数组
-
+```php
     // 获取感词库索引数组
     $wordData = array(
         '察象蚂',
@@ -35,67 +35,51 @@
     
     // get one helper
     $handle = SensitiveHelper::init()->setTree($wordData);
-
+```
 场景二: 全站使用一套敏感词库
-
+```php
     // 获取感词库文件路径
     $wordFilePath = 'tests/data/words.txt';
     
     // get one helper
     $handle = SensitiveHelper::init()->setTreeByFile($wordFilePath);
-
+```
 ### 设置干扰因子集合
 > 注意只干扰因子只支持单个字符或单个汉字，暂不支持词
 
 > 但是多个干扰因子连在一起，敏感词可以准确识别
-
+```php
     $handle = SensitiveHelper::init()->setStopWordList(['&', '*', '.'])->setTreeByFile($wordFilePath);
-
+```
 ### 忽略大小写
 > 注意该设置只有在构建敏感词库树之前调用
 
 > 在构建敏感词库树之后调用，结果可能不符合预期
-
+```php
     $handle = SensitiveHelper::init()->setIgnoreCase()->setTree(['Av', '赌球网'])
-
+```
 ### 检测是否含有敏感词
-
+```php
     $islegal = $handle->islegal($content);
-
+```
 ### 敏感词过滤
-    
-    // 敏感词替换为*为例（会替换为相同字符长度的*）
-    $filterContent = $handle->replace($content, '*', true);
-    
-     // 或敏感词替换为***为例
-     $filterContent = $handle->replace($content, '***');
-     
+```php
+// 敏感词替换为*为例（会替换为相同字符长度的*）
+$filterContent = $handle->replace($content, '*', true);
+
+ // 或敏感词替换为***为例
+ $filterContent = $handle->replace($content, '***');
+``` 
  ### 标记敏感词
-
+```php
      $markedContent = $handle->mark($content, '<mark>', '</mark>');
-    
+```
 ### 获取文字中的敏感词
-
+```php
     // 获取内容中所有的敏感词
     $sensitiveWordGroup = $handle->getBadWord($content);
     // 仅且获取一个敏感词
     $sensitiveWordGroup = $handle->getBadWord($content, 1);
-
-#### 使用composer自动加载php命名空间
-```bash
-$ composer update
-```
-### 运行单元测试
-
-```bash
-$ composer test
 ```
 
-注：本仓库fork自：https://github.com/FireLustre/php-dfa-sensitive， 现仅做个人学习使用！<b>建议使用原仓库！</b>
 
-本fork在原有基础上
-- 新增两个特性
-    - getBadWord返回的敏感词列表是排查的，避免替换敏感词的出现重复替换的问题（提过PR，没有通过所以留个记录！）
-    - 新增停止词功能，提高敏感词命中率
-    - 新增忽略大小写功能
-- ci的集成
